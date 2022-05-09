@@ -1,0 +1,9 @@
+services:
+  kenjoyer:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - type: bind
+        source: .
+        target: /opt/workdir/
