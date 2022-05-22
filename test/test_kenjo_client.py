@@ -13,3 +13,9 @@ class TestKenjoApiClient:
 
         last_request = requester.last_request
         assert last_request['headers']['Authorization'] == 'Bearer ey000'
+
+    # def test_it_retrieves_time_off_dates(self):
+    #     requester = RequesterDouble()
+    #     client = KenjoApiClient({ 'requester': requester })
+
+    #     result = client.retrieve_time_off_dates()
