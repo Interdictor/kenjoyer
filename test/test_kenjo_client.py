@@ -1,3 +1,15 @@
-class TestHarness:
-    def test_it_is_working(self):
-        assert True
+import pytest
+from src.kenjo_api_client import KenjoApiClient
+from test.doubles.requester_double import RequesterDouble
+
+
+class TestKenjoApiClient:
+    @pytest.mark.skip()
+    def test_it_calls_to_kenjo_with_configured_auth_token(self):
+        requester = RequesterDouble()
+        client = KenjoApiClient({ 'requester': requester })
+
+        client.retrieve_time_off_dates()
+
+        last_request = requester.last_request
+        assert last_request['headers']['Authorization'] == 'Bearer ey000'
