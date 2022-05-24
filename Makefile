@@ -6,7 +6,7 @@ build:
 test:
 	docker-compose run --rm kenjoyer pytest -vv
 
-t-watch:
+twatch:
 	docker-compose run --rm kenjoyer ptw
 
 run:

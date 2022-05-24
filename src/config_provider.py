@@ -7,10 +7,8 @@ class ConfigProvider():
 
     def _load(self):
         with open('config.json') as file:
-            config = json.loads(file.read())
+            self.config = json.loads(file.read())
 
-        print(config)
-        self.config = config
 
     def provide(self):
         return self.config
