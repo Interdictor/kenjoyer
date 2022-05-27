@@ -7,6 +7,7 @@ class ConfigProviderDouble:
             "break_time": "60",
             "start_time": "480",
             "end_time": "1020",
+            "template_key": "spain",
             "_": "all the below keys are just comments. There is no need to edit them",
             "__": "remember to edit config.json and not config_example.json file",
             "_start_date": "ensure you are using the given date format, %Y-%m-%d",

@@ -77,7 +77,7 @@ class KenjoApiClient:
             headers=self._build_headers(),
         )
 
-        country = 'spain'
+        country = self.config['template_key']
         response_body = request.json()
 
         relevant_template = [holiday_template for holiday_template in response_body if holiday_template['templateKey'] == country]
