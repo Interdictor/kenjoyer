@@ -17,24 +17,18 @@ class KenjoApiClient:
         self.requester = dependencies.get('requester') or Requester()
 
 
-    # @classmethod
-    # def retrieve_punched_dates(cls):
-    #     config = ConfigProvider.provide()
-    #     url = cls.DOMAIN + '/user-attendance-db/find'
+    def retrieve_punched_dates(self):
+        url = self.DOMAIN + '/user-attendance-db/find'
+        start_timestamp = self.config['start_date'] + self.TIMESTAMP_SUFFIX
+        now_timestamp = datetime.now().isoformat() + 'Z'
 
-    #     timestamp_suffix = 'T00:00:00.000Z'
-    #     start_timestamp = config['start_date'] + timestamp_suffix
-    #     now_timestamp = datetime.now().isoformat() + 'Z'
-
-
-    #     payload = {
-    #         "_userId":"lol",
-    #         "date": { "$gte": start_timestamp, "$lte" : now_timestamp },
-    #         "_deleted": False,
-    #     }
-
-    #     response = requests.post(url, headers=cls.headers(), json=payload)
-    #     return [punch['date'].split('T')[0] for punch in response.json()]
+        payload = {
+            "_userId": self.config['kenjo_user_id'],
+            "date": { "$gte": start_timestamp, "$lte" : now_timestamp },
+            "_deleted": False,
+        }
+        response = self.requester.post(url, headers=self._build_headers(), json=payload)
+        return [recorded_punch['date'].split('T')[0] for recorded_punch in response.json()]
 
     def punch(self, timestamp):
         url = self.DOMAIN + '/user-attendance-db'

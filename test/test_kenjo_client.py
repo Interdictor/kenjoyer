@@ -1,10 +1,11 @@
-import json
 import pytest
 from src.kenjo_api_client import KenjoApiClient
 from test.doubles.requester_double import RequesterDouble
 from test.samples.response_for_days_off import ResponseForDaysOff
 from test.samples.response_for_templates import ResponseForTemplates
 from test.doubles.config_provider_double import ConfigProviderDouble
+
+from test.samples.response_for_user_attendance import ResponseForUserAttendance
 
 
 class TestKenjoApiClient:
@@ -55,19 +56,19 @@ class TestKenjoApiClient:
         client = KenjoApiClient({ 'requester': requester, 'configProvider': configProvider })
         some_timestamp = '1990-01-01'
 
-        result = client.punch(some_timestamp)
+        client.punch(some_timestamp)
 
         assert requester.last_request['json']['_userId'] == '00aaa00000000000aaa0aa0'
         assert requester.last_request['json']['date'] == '1990-01-01T00:00:00.000Z'
 
-    @pytest.mark.skip
     def test_it_retrieves_already_punched_days(self):
-        requester = RequesterDouble([ {} ])
+        requester = RequesterDouble([ ResponseForUserAttendance.build() ])
         configProvider = ConfigProviderDouble()
         client = KenjoApiClient({ 'requester': requester, 'configProvider': configProvider })
-        some_timestamp = '1990-01-01'
 
-        result = client.punch(some_timestamp)
+        result = client.retrieve_punched_dates()
 
-        assert requester.last_request['json']['_userId'] == 'lolx'
-        assert requester.last_request['json']['date'] == '1990-01-01T00:00:00.000Z'
+        assert result == ['2022-03-14', '2022-03-15']
+        assert requester.last_request['json']['_userId'] == '00aaa00000000000aaa0aa0'
+        assert requester.last_request['json']['date']['$gte'] == '2022-04-01T00:00:00.000Z'
+        assert requester.last_request['json']['_deleted'] == False
