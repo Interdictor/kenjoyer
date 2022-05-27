@@ -8,8 +8,9 @@ client = KenjoApiClient()
 configProvider = ConfigProvider()
 
 config = configProvider.provide()
-time_off = client.retrieve_time_off_dates()
 
+already_punched_timestamps = client.retrieve_punched_dates()
+time_off = client.retrieve_time_off_dates()
 day_off_timestamps = time_off['days_off']
 holidays = time_off['holidays']
 
@@ -34,10 +35,9 @@ for day in generate_date(start_date):
         print(f'[SKIP] {current_timestamp} - Is a day off')
         continue
 
+    if current_timestamp in already_punched_timestamps:
+        print(f'[SKIP] {current_timestamp} - Already punched')
+        continue
 
-# days = 100
-
-# for day in range(days):
-
-
-# free_days = KenjoApiClient
+    client.punch(current_timestamp)
+    print(f'[SUCCESS] {current_timestamp} - Punched')

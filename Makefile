@@ -10,7 +10,7 @@ twatch:
 	docker-compose run --rm kenjoyer ptw
 
 run:
-	docker build . -t kenjoyer && docker run --rm kenjoyer
+	docker-compose run --rm kenjoyer
 
 shell:
 	docker-compose run --rm kenjoyer bash

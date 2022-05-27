@@ -37,7 +37,7 @@ class KenjoApiClient:
         payload = {
             "_userId": self.config['kenjo_user_id'],
             "ownerId": self.config['kenjo_user_id'],
-            "date":timestamp + self.TIMESTAMP_SUFFIX,
+            "date": timestamp + self.TIMESTAMP_SUFFIX,
             "startTime": self.config['start_time'],
             "endTime": self.config['end_time'],
             "breakTime": self.config['break_time'],
@@ -63,7 +63,6 @@ class KenjoApiClient:
             raise RuntimeError(f'[ERROR] Unable to retrieve time off dates. Kenjo API response code: {request.status_code}. Is the auth token properly setted and updated?')
 
         response_payload = request.json()
-        status_code = request.status_code
         holidays = self.holidays()
 
         splits = [ DaysOffSplit(split_data, holidays) for split_data in response_payload ]
