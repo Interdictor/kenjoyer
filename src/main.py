@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, time
 from src.iso_pattern import IsoPattern
 from src.config_provider import ConfigProvider
 from src.kenjo_api_client import KenjoApiClient
+from weekday import Weekday
 
 client = KenjoApiClient()
 configProvider = ConfigProvider()
@@ -26,6 +27,10 @@ def generate_date(start_date):
 
 for day in generate_date(start_date):
     current_timestamp = day.strftime(IsoPattern.DATE.value)
+
+    if day.weekday() in [Weekday.SATURDAY.value, Weekday.SUNDAY.value]:
+        print(f'[SKIP] {current_timestamp} - Is a weekend')
+        continue
 
     if current_timestamp in holidays:
         print(f'[SKIP] {current_timestamp} - Is a holiday')
