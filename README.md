@@ -4,7 +4,7 @@
 * python 3
 
 ## SETUP
-  * Duplicate the file config_example.json, rename it to "config.json" and fill it with your custom configuration. You will need your kenjo user id and auth token, You can retrieve them user chrome/firefox dev tools (or ask a developer for help)
+  * Duplicate the file `config_example.json`, rename it to `config.json` and fill it with your custom configuration. You will need your kenjo user id and auth token (`Authorization` header), can be found using Chrome/Firefox dev tools.
 
 ## REGULAR USER COMMANDS
   * `pip install -r requirements.txt`
